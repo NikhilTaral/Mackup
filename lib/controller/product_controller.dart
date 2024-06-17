@@ -1,13 +1,13 @@
-import 'package:fast/product.dart';
-import 'package:fast/remote_services.dart';
+import 'package:fast/data/module/product.dart_module.dart';
+import 'package:fast/data/repositories/products_repositories.dart';
 import 'package:get/state_manager.dart';
 
 class ProductController extends GetxController {
   var isLoading = true.obs;
   RxList<Product> productList = <Product>[].obs;
-  RxList<Product> cartList = <Product>[].obs; 
+  RxList<Product> cartList = <Product>[].obs;
 
-  get cartItems => cartList; 
+  get cartItems => cartList;
 
   @override
   void onInit() {
@@ -30,6 +30,12 @@ class ProductController extends GetxController {
   void addToCart(Product product) {
     if (!cartList.contains(product)) {
       cartList.add(product);
+    }
+  }
+
+  void removeToCart(Product product) {
+    if (cartList.contains(product)) {
+      cartList.remove(product);
     }
   }
 }

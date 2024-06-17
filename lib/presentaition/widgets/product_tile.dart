@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:fast/product.dart';
+import 'package:fast/data/module/product.dart_module.dart';
 import 'package:get/get.dart';
 
 class ProductTile extends StatelessWidget {
   final Product product;
   final Function(Product) onAddToCart;
+  final Function(Product) removeToCart;
 
-  const ProductTile(this.product, {Key? key, required this.onAddToCart}) : super(key: key);
+  const ProductTile(this.product,
+      {super.key, required this.onAddToCart, required this.removeToCart});
 
   @override
   Widget build(BuildContext context) {
@@ -43,17 +45,29 @@ class ProductTile extends StatelessWidget {
                                 ? const Icon(Icons.favorite_rounded)
                                 : const Icon(Icons.favorite_border),
                             onPressed: () {
-                              onAddToCart(product); // Call the callback function to add the product to the cart
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text('${product.name} added to cart'),
-                                ),
-                              );
+                              if (product.isFavorite.value) {
+                                removeToCart(product);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                        '${product.name} removed from cart'),
+                                  ),
+                                );
+                              } else {
+                                onAddToCart(product);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content:
+                                        Text('${product.name} added to cart'),
+                                  ),
+                                );
+                              }
+
                               product.isFavorite.toggle();
                             },
                           ),
                         )),
-                  )
+                  ),
                 ],
               ),
               const SizedBox(height: 8),

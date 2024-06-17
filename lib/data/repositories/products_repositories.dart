@@ -1,4 +1,4 @@
-import 'package:fast/product.dart';
+import 'package:fast/data/module/product.dart_module.dart';
 import 'package:http/http.dart' as http;
 
 class RemoteServices {
